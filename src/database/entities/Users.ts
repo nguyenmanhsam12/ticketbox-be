@@ -23,6 +23,7 @@ export class Users extends BaseEntity {
 
   @Column({ length: 50, unique: true, nullable: true })
   slug: string;
+
   @Column({ nullable: true })
   role_id: number;
 

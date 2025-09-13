@@ -1,15 +1,21 @@
 // src/auth/auth.module.ts
 import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { UsersModule } from '../users/users.module';
 import { AuthService } from './auth.service';
 import { AuthController } from './auth.controller';
-import { JwtAccessStrategy } from './strategies/jwt-access.strategy';
-import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { UserModule } from '../user/user.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from 'src/common/constants/constants';
 
 @Module({
-  imports: [UsersModule, JwtModule.register({})],
-  providers: [AuthService, JwtAccessStrategy, JwtRefreshStrategy],
+  imports: [
+    UserModule,
+    JwtModule.register({
+      global: true,
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: '365d' },
+    }),
+  ],
   controllers: [AuthController],
+  providers: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

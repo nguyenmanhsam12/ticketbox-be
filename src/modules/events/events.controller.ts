@@ -1,11 +1,9 @@
-import { Controller, Get, Param, Query, Post, Body, Patch, Delete, UseGuards, Req, ParseIntPipe, Put, UseInterceptors, UploadedFiles } from '@nestjs/common';
+import { Controller, Get, Param, Query, Post, Body, Patch, Delete, Req, ParseIntPipe, Put, UseInterceptors, UploadedFiles } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
-import { JwtAccessGuard } from '../auth/guards/jwt-access.guard';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { CreatePaymentEventDto } from './dto/create-payment.dto';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
-import { CloudinaryService } from 'src/common/cloudinary/cloudinary.service';
 import { FileUploadService } from 'src/common/services/file-upload.service';
 import { UpdateEventDto } from './dto/update-event.dto';
 
@@ -37,18 +35,17 @@ export class EventsController {
   getPendingEvents() {
     return this.eventsService.getPendingEvents();
   }
-  
+
   @Get('/upcoming')
   getUpcomingEvents() {
     return this.eventsService.getUpcomingEvents();
   }
-  
+
   @Get('/past')
   getPastEvents() {
     return this.eventsService.getPastEvents();
   }
 
-  // @UseGuards(JwtAccessGuard)
   @Post()
   @UseInterceptors(
     FileFieldsInterceptor([
@@ -66,7 +63,7 @@ export class EventsController {
       org_thumbnail: Express.Multer.File[]
     },
   ) {
-    
+
     const uploadedFiles = await this.fileUploadService.uploadEventFiles(files);
 
     Object.assign(createEventDto, uploadedFiles);
@@ -127,10 +124,10 @@ export class EventsController {
     @Query('limit') limit = '20',
   ) {
 
-    console.log('q',q);
-    
+    console.log('q', q);
 
-    return this.eventsService.searchEvents( { q, cate, page: parseInt(page), limit: parseInt(limit) } );
+
+    return this.eventsService.searchEvents({ q, cate, page: parseInt(page), limit: parseInt(limit) });
   }
 
   @Get('detail/:id')

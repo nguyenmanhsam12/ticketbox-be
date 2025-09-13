@@ -3,7 +3,6 @@ import { CartService } from './cart.service';
 import { CartController } from './cart.controller';
 import { ShowsModule } from '../shows/shows.module';
 import { TicketsModule } from '../tickets/tickets.module';
-import { UsersModule } from '../users/users.module';
 import { CartRepository } from './cart.repo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Carts } from 'src/database/entities/Carts';
@@ -16,15 +15,14 @@ import { EventsModule } from '../events/events.module';
   imports: [
     ShowsModule,
     TicketsModule,
-    UsersModule,
-    TypeOrmModule.forFeature([Carts,CartItems,Tickets]),
+    TypeOrmModule.forFeature([Carts, CartItems, Tickets]),
     CartItemModule,
     EventsModule,
   ],
   controllers: [CartController],
   providers: [
     CartService,
-    CartRepository,    
+    CartRepository,
   ],
 })
-export class CartModule {}
+export class CartModule { }
