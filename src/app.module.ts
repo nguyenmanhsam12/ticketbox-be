@@ -24,6 +24,8 @@ import { CartModule } from './modules/cart/cart.module';
 import { CartItemModule } from './modules/cart-item/cart-item.module';
 import { PaymentMethodModule } from './modules/payment-method/payment-method.module';
 import { UserModule } from './modules/user/user.module';
+import { OrderModule } from './modules/order/order.module';
+import { OrderItemModule } from './modules/order-item/order-item.module';
 
 @Module({
   imports: [
@@ -45,6 +47,8 @@ import { UserModule } from './modules/user/user.module';
     CartItemModule,
     PaymentMethodModule,
     UserModule,
+    OrderModule,
+    OrderItemModule,
   ],
   controllers: [AppController],
   providers: [

@@ -7,19 +7,17 @@ import {
   OneToMany,
 } from 'typeorm';
 import { Orders } from './Orders';
-@Entity({ name: 'payment_methods' })
-export class PaymentMethod {
+
+@Entity('payment_status')
+export class PaymentStatus {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ length: 100 })
-  name: string; // Tên hiển thị: 'VNPAY', 'ZaloPay'
-
-  @Column({ nullable: true })
-  logoUrl: string; // URL logo (nếu có)
-
   @Column({ nullable: true })
   code: string;
+
+  @Column({ length: 100 })
+  name: string;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
@@ -27,6 +25,6 @@ export class PaymentMethod {
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
 
-  @OneToMany(() => Orders, (order) => order.payment_method)
+  @OneToMany(() => Orders, (order) => order.payment_status)
   orders : Orders;
 }

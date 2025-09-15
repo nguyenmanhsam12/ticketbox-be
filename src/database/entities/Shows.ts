@@ -10,6 +10,7 @@ import { Events } from './Events';
 import { Tickets } from './Tickets';
 import { BaseEntity } from '../../common/base/base.entity';
 import { Carts } from './Carts';
+import { OrderItems } from './OrderItem';
 
 @Entity('shows')
 export class Shows extends BaseEntity {
@@ -31,4 +32,7 @@ export class Shows extends BaseEntity {
 
   @OneToMany(() => Carts, (cart) => cart.show)
   carts: Carts[];
+
+  @OneToMany(() => OrderItems, (orderItem) => orderItem.show)
+  order_item : OrderItems[];
 }

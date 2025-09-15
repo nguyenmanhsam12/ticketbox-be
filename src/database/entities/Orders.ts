@@ -3,10 +3,15 @@ import {
   Column,
   ManyToOne,
   JoinColumn,
+  OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Users } from './Users';
 import { Events } from './Events';
 import { BaseEntity } from '../../common/base/base.entity';
+import { PaymentMethod } from './PaymentMethod';
+import { PaymentStatus } from './PaymentStatus';
+import { OrderItems } from './OrderItem';
 
 @Entity('orders')
 export class Orders extends BaseEntity {
@@ -17,30 +22,35 @@ export class Orders extends BaseEntity {
   @Column()
   event_id: number;
 
+  @Column()
+  payment_method_id : number;
+
+  @Column()
+  payment_status_id: number;
+
+  @Column({ type : 'varchar' })
+  orderCode : string;
+
   @Column({ length: 30, nullable: true })
   phone: string;
 
   @Column({ length: 255, nullable: true })
   email: string;
 
-  @Column({ length: 255, nullable: true })
-  province: string;
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
+  total_amount: number;
 
-  @Column({ length: 255, nullable: true })
-  district: string;
+  @Column({ type: 'int' })
+  total_quantity: number;
 
-  @Column({ length: 255, nullable: true })
-  ward: string;
-
-  @Column({ length: 255, nullable: true })
-  street: string;
-
-  @Column({ length: 255, nullable: true })
-  address: string;
-
-  @Column({ length: 255, nullable: true })
-  note: string;
-
+  @Column({
+    name: 'status',
+    type: 'enum',
+    enum: ['PENDING', 'CONFIRMED', 'CANCELLED'],
+    default: 'PENDING',
+  })
+  status: 'PENDING' | 'CONFIRMED' | 'CANCELLED';
+  
   @ManyToOne(() => Users, (user) => user.orders)
   @JoinColumn({ name: 'user_id' })
   user: Users;
@@ -48,4 +58,16 @@ export class Orders extends BaseEntity {
   @ManyToOne(() => Events, (event) => event.orders)
   @JoinColumn({ name: 'event_id' })
   event: Events;
+
+  @ManyToOne(() => PaymentMethod, (payment_method) => payment_method.orders)
+  @JoinColumn({ name : 'payment_method_id' })
+  payment_method : PaymentMethod;
+
+  @ManyToOne(() => PaymentStatus, (payment_status) => payment_status.orders)
+  @JoinColumn({ name : 'payment_status_id' })
+  payment_status : PaymentStatus;
+
+  @OneToMany(() => OrderItems, (order_item) => order_item.order)
+  order_items: OrderItems[];
+  
 }

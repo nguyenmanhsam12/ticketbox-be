@@ -20,9 +20,7 @@ import { EventsModule } from '../events/events.module';
     EventsModule,
   ],
   controllers: [CartController],
-  providers: [
-    CartService,
-    CartRepository,
-  ],
+  providers: [CartService, CartRepository],
+  exports: [CartService, CartRepository],
 })
-export class CartModule { }
+export class CartModule {}

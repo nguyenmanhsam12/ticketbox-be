@@ -46,9 +46,10 @@ export class CartRepository extends BaseRepository<Carts> {
     return this.cartRepo.findOne({ where: { id: cartId }, relations: ['cart_items', 'cart_items.ticket'] });
   }
 
-  async getCartByBookingCode(bookingCode : string, showId : number) {
+  async getCartByBookingCode(bookingCode : string, showId : number, manager ?: EntityManager) {
     if(!bookingCode) throw new HttpException('Booking code is required', HttpStatus.BAD_REQUEST);
-    return this.cartRepo.findOne({ where: { booking_code: bookingCode, show: { id: showId },}, relations: ['cart_items', 'cart_items.ticket'] });
+    const repo = manager ? manager.getRepository(Carts) : this.cartRepo
+    return repo.findOne({ where: { booking_code: bookingCode, show: { id: showId },}, relations: ['cart_items', 'cart_items.ticket'] });
   }
 
   async updateStepCart(bookingCode : string, showId : number, body : any) {

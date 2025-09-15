@@ -4,10 +4,12 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { Shows } from './Shows';
 import { BaseEntity } from '../../common/base/base.entity';
 import { CartItems } from './CartItems';
+import { OrderItems } from './OrderItem';
 
 @Entity('tickets')
 export class Tickets extends BaseEntity {
@@ -57,4 +59,7 @@ export class Tickets extends BaseEntity {
 
   @OneToMany(() => CartItems, (cartItem) => cartItem.ticket)
   cart_items: CartItems[];
+
+  @OneToOne(() => OrderItems, (orderItem) => orderItem.ticket)
+  orderItem : OrderItems;
 }
