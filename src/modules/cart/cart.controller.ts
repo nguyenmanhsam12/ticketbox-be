@@ -7,16 +7,22 @@ import {
   Param,
   Delete,
   Query,
+  UseGuards,
+  Req,
 } from '@nestjs/common';
 import { CartService } from './cart.service';
+import { AuthGuard } from 'src/common/guard/auth.guard';
+import { Request } from 'express';
 
+@UseGuards(AuthGuard)
 @Controller('carts')
 export class CartController {
-  constructor(private readonly cartService: CartService) {}
+  constructor(private readonly cartService: CartService) { }
 
   @Post('add')
-  async addToCart(@Body() createCartDto: any) {
-    return this.cartService.addToCart(createCartDto);
+  async addToCart(@Body() createCartDto: any, @Req() req: Request) {
+    const user = req['user'];
+    return this.cartService.addToCart({ ...createCartDto, userId: user.id });
   }
 
   @Get('/quote')
@@ -31,7 +37,7 @@ export class CartController {
   async updateStepCart(
     @Query('booking_code') bookingCode: string,
     @Query('show_id') showId: string,
-    @Body() body : any
+    @Body() body: any
   ) {
     return this.cartService.updateStepCart(bookingCode, Number(showId), body);
   }
