@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PaymentMethodRepo } from './payment-method.repo';
 import { vnpConfig } from 'src/config/vnpay.config';
 import * as qs from 'qs';
@@ -56,4 +56,23 @@ export class PaymentMethodService {
     }
     return sorted;
   }
+
+  verifySignature(query: any): boolean {
+    let vnp_Params = query;
+    const secureHash = vnp_Params['vnp_SecureHash'];
+    delete vnp_Params['vnp_SecureHash'];
+    delete vnp_Params['vnp_SecureHashType'];
+
+    vnp_Params = this.sortObject(vnp_Params);
+
+    let querystring = require('qs');
+    let signData = querystring.stringify(vnp_Params, { encode: false });
+    let crypto = require("crypto");     
+    let hmac = crypto.createHmac("sha512", vnpConfig.vnp_HashSecret);
+    const signed = hmac.update(new Buffer(signData, 'utf-8')).digest("hex");   
+
+    return secureHash === signed;
+  }
+
+  
 }

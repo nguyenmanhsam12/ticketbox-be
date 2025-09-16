@@ -163,16 +163,16 @@ export class EventsController {
     return this.eventsService.getSettings(eventId);
   }
 
-  @Put(':eventId/payment-info')
-  createPaymentInfo(
-    @Param('eventId', ParseIntPipe) eventId: number,
-    @Body() createPaymentDto: CreatePaymentEventDto
-  ) {
-    return this.eventsService.createPaymentInfo(eventId, createPaymentDto)
-  }
+  // @Put(':eventId/payment-info')
+  // createPaymentInfo(
+  //   @Param('eventId', ParseIntPipe) eventId: number,
+  //   @Body() createPaymentDto: CreatePaymentEventDto
+  // ) {
+  //   return this.eventsService.createPaymentInfo(eventId, createPaymentDto)
+  // }
 
-  @Get(':eventId/payment-info')
-  getPaymentInfo(@Param('eventId', ParseIntPipe) eventId: number) {
-    return this.eventsService.getPaymentInfo(eventId);
-  }
+  // @Get(':eventId/payment-info')
+  // getPaymentInfo(@Param('eventId', ParseIntPipe) eventId: number) {
+  //   return this.eventsService.getPaymentInfo(eventId);
+  // }
 }

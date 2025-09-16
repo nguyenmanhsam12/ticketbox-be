@@ -14,7 +14,6 @@ import { EventsRepository } from './repositories/events.repository';
 import { SettingsRepository } from './repositories/settings.repository';
 import { CreateSettingDto } from './dto/create-setting.dto';
 import { CreatePaymentEventDto } from './dto/create-payment.dto';
-import { PaymentEventRepository } from './repositories/payment-event.repository';
 import { ApprovalStatus } from 'src/common/enums/event.enum';
 import { UpdateEventDto } from './dto/update-event.dto';
 
@@ -24,7 +23,6 @@ export class EventsService extends BaseService<Events> {
     private readonly eventRepository: EventRepository,
     private readonly eventsRepo: EventsRepository,
     private readonly settingRepo: SettingsRepository,
-    private readonly paymentRepo: PaymentEventRepository,
   ) {
     super(eventRepository);
   }
@@ -174,35 +172,35 @@ export class EventsService extends BaseService<Events> {
     return this.settingRepo.findByEventId(eventId);
   }
 
-  async createPaymentInfo(eventId: number, dto: CreatePaymentEventDto) {
-    await this.eventsRepo.findById(eventId);
+  // async createPaymentInfo(eventId: number, dto: CreatePaymentEventDto) {
+  //   await this.eventsRepo.findById(eventId);
 
-    const existingPayment = await this.paymentRepo.findOne({
-      where: { event_id: eventId },
-    });
+  //   const existingPayment = await this.paymentRepo.findOne({
+  //     where: { event_id: eventId },
+  //   });
 
-    if (existingPayment) {
-      await this.paymentRepo.update(existingPayment.id, {
-        ...dto,
-        event_id: eventId,
-        updated_at: new Date(),
-      });
+  //   if (existingPayment) {
+  //     await this.paymentRepo.update(existingPayment.id, {
+  //       ...dto,
+  //       event_id: eventId,
+  //       updated_at: new Date(),
+  //     });
 
-      return this.paymentRepo.findOne({
-        where: { id: existingPayment.id },
-      });
-    } else {
-      return this.paymentRepo.create({
-        ...dto,
-        event_id: eventId,
-      });
-    }
-  }
+  //     return this.paymentRepo.findOne({
+  //       where: { id: existingPayment.id },
+  //     });
+  //   } else {
+  //     return this.paymentRepo.create({
+  //       ...dto,
+  //       event_id: eventId,
+  //     });
+  //   }
+  // }
 
-  async getPaymentInfo(eventId: number) {
-    await this.eventsRepo.findById(eventId);
-    return this.paymentRepo.findByEventId(eventId);
-  }
+  // async getPaymentInfo(eventId: number) {
+  //   await this.eventsRepo.findById(eventId);
+  //   return this.paymentRepo.findByEventId(eventId);
+  // }
 
   async getDraftEvents() {
     return this.eventsRepo.findAll({ where: { status: ApprovalStatus.DRAFT } });

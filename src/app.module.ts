@@ -26,6 +26,7 @@ import { PaymentMethodModule } from './modules/payment-method/payment-method.mod
 import { UserModule } from './modules/user/user.module';
 import { OrderModule } from './modules/order/order.module';
 import { OrderItemModule } from './modules/order-item/order-item.module';
+import { PaymentTransactionModule } from './modules/payment-transaction/payment-transaction.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { OrderItemModule } from './modules/order-item/order-item.module';
     UserModule,
     OrderModule,
     OrderItemModule,
+    PaymentTransactionModule,
   ],
   controllers: [AppController],
   providers: [

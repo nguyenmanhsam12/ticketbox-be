@@ -1,6 +1,5 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   ManyToOne,
   JoinColumn,
@@ -10,7 +9,7 @@ import { Events } from './Events';
 import { Tickets } from './Tickets';
 import { BaseEntity } from '../../common/base/base.entity';
 import { Carts } from './Carts';
-import { OrderItems } from './OrderItem';
+import { Orders } from './Orders';
 
 @Entity('shows')
 export class Shows extends BaseEntity {
@@ -33,6 +32,7 @@ export class Shows extends BaseEntity {
   @OneToMany(() => Carts, (cart) => cart.show)
   carts: Carts[];
 
-  @OneToMany(() => OrderItems, (orderItem) => orderItem.show)
-  order_item : OrderItems[];
+  @OneToMany(() => Orders, (order) => order.show)
+  orders: Orders[];
+
 }

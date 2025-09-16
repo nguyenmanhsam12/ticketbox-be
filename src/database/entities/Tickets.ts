@@ -60,6 +60,6 @@ export class Tickets extends BaseEntity {
   @OneToMany(() => CartItems, (cartItem) => cartItem.ticket)
   cart_items: CartItems[];
 
-  @OneToOne(() => OrderItems, (orderItem) => orderItem.ticket)
-  orderItem : OrderItems;
+  @OneToMany(() => OrderItems, (orderItem) => orderItem.ticket)
+  orderItem : OrderItems[];
 }

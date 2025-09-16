@@ -6,11 +6,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Orders } from 'src/database/entities/Orders';
 import { CartModule } from '../cart/cart.module';
 import { PaymentMethodModule } from '../payment-method/payment-method.module';
+import { PaymentTransactionModule } from '../payment-transaction/payment-transaction.module';
 
 @Module({
   imports : [TypeOrmModule.forFeature([Orders]),
   CartModule,
   PaymentMethodModule,
+  PaymentTransactionModule,
   ],
   controllers: [OrderController],
   providers: [OrderService, OrderRepository],

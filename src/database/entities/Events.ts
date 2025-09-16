@@ -9,9 +9,7 @@ import { Categories } from './Categories';
 import { Users } from './Users';
 import { Shows } from './Shows';
 import { Settings } from './Settings';
-import { PaymentEvent } from './PaymentEvent';
 import { Orders } from './Orders';
-import { Payments } from './Payments';
 import { EventMemberships } from './EventMemberships';
 import { ApprovalStatus } from '../../common/enums/event.enum';
 import { BaseEntity } from '../../common/base/base.entity';
@@ -97,14 +95,8 @@ export class Events extends BaseEntity {
   @OneToMany(() => Settings, (setting) => setting.event)
   settings: Settings[];
 
-  @OneToMany(() => PaymentEvent, (pe) => pe.event)
-  paymentEvents: PaymentEvent[];
-
   @OneToMany(() => Orders, (order) => order.event)
   orders: Orders[];
-
-  @OneToMany(() => Payments, (payment) => payment.event)
-  payments: Payments[];
 
   @OneToMany(() => EventMemberships, (membership) => membership.event)
   eventMemberships: EventMemberships[];

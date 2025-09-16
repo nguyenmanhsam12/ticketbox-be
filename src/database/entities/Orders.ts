@@ -12,6 +12,7 @@ import { BaseEntity } from '../../common/base/base.entity';
 import { PaymentMethod } from './PaymentMethod';
 import { PaymentStatus } from './PaymentStatus';
 import { OrderItems } from './OrderItem';
+import { Shows } from './Shows';
 
 @Entity('orders')
 export class Orders extends BaseEntity {
@@ -21,6 +22,9 @@ export class Orders extends BaseEntity {
 
   @Column()
   event_id: number;
+
+  @Column()
+  show_id: number;
 
   @Column()
   payment_method_id : number;
@@ -69,5 +73,8 @@ export class Orders extends BaseEntity {
 
   @OneToMany(() => OrderItems, (order_item) => order_item.order)
   order_items: OrderItems[];
-  
+
+  @ManyToOne(() => Shows, (show) => show.orders )
+  @JoinColumn({ name : 'show_id' })
+  show : Shows;
 }

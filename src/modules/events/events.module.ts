@@ -8,8 +8,6 @@ import { CategoriesModule } from '../categories/categories.module';
 import { EventsRepository } from './repositories/events.repository';
 import { SettingsRepository } from './repositories/settings.repository';
 import { Settings } from 'src/database/entities/Settings';
-import { PaymentEvent } from 'src/database/entities/PaymentEvent';
-import { PaymentEventRepository } from './repositories/payment-event.repository';
 import { CloudinaryModule } from 'src/common/cloudinary/cloudinary.module';
 import { FileUploadService } from 'src/common/services/file-upload.service';
 import { SocketEventsService } from './socket-events.service';
@@ -17,7 +15,7 @@ import { EventsGateway } from './events.gateway';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Events, Settings, PaymentEvent]),
+    TypeOrmModule.forFeature([Events, Settings]),
     CloudinaryModule,
     CategoriesModule,
   ],
@@ -25,7 +23,6 @@ import { EventsGateway } from './events.gateway';
   providers: [
     EventsRepository,
     SettingsRepository,
-    PaymentEventRepository,
     EventsService,
     FileUploadService,
     EventRepository,

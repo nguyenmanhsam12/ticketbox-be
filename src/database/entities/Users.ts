@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
+import { Entity,Column, OneToMany } from 'typeorm';
 import { Orders } from './Orders';
-import { Payments } from './Payments';
 import { EventMemberships } from './EventMemberships';
 import { Events } from './Events';
 import { USER_GENDER } from '../../common/enums/user.enum';
@@ -8,6 +7,7 @@ import { Exclude } from 'class-transformer';
 import { Roles } from './Roles';
 import { BaseEntity } from '../../common/base/base.entity';
 import { Carts } from './Carts';
+import { PaymentTransactions } from './PaymentTransaction';
 
 @Entity('users')
 export class Users extends BaseEntity {
@@ -49,10 +49,7 @@ export class Users extends BaseEntity {
 
   @OneToMany(() => Orders, (order) => order.user)
   orders: Orders[];
-
-  @OneToMany(() => Payments, (payment) => payment.user)
-  payments: Payments[];
-
+  
   @OneToMany(() => EventMemberships, (membership) => membership.user)
   eventMemberships: EventMemberships[];
 
@@ -61,4 +58,7 @@ export class Users extends BaseEntity {
 
   @OneToMany(() => Carts, (cart) => cart.user)
   carts: Carts[];
+
+  @OneToMany(() => PaymentTransactions, (payment_transaction) => payment_transaction.user)
+  payment_transactions : PaymentTransactions[];
 }
