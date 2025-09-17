@@ -29,7 +29,11 @@ export class CartItemRepository extends BaseRepository<CartItems> {
     return manager.save(cartItem);
   }
 
-  deleteByIdWithManager(manager: EntityManager, id: number) {
-    return manager.delete(CartItems, { id });
+  async softDeleteByCartId(cartId: number, manager?: EntityManager): Promise<void> {
+    const repo = manager ? manager.getRepository(CartItems) : this.cartItemRepo;
+    await repo.update(
+      { cart: { id : cartId }  },
+      { deleted_at: new Date() },
+    );
   }
 }

@@ -16,6 +16,9 @@ export class Shows extends BaseEntity {
   @Column()
   event_id: number;
 
+  @Column({ type: 'bool', nullable: true })
+  is_free: boolean;
+
   @Column({ type: 'timestamp' })
   time_start: Date;
 

@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
+import { Column, DeleteDateColumn, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import { BaseEntity } from '../../common/base/base.entity';
 import { Carts } from './Carts';
 import { Tickets } from './Tickets';
@@ -16,6 +16,9 @@ export class CartItems extends BaseEntity {
 
   @Column({ type: 'bool', nullable: true })
   is_free: boolean | null;
+
+  @DeleteDateColumn({ type: 'timestamp', nullable: true })
+  deleted_at: Date | null;
 
   @ManyToOne(() => Carts, (cart) => cart.cart_items)
   @JoinColumn({ name: 'cart_id' })

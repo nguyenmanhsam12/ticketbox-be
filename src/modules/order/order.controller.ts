@@ -11,22 +11,21 @@ export class OrderController {
 
   @UseGuards(AuthGuard)
   @Post('create')
-  create(@Body() payload, @Req() req : Request ) {
+  create(@Body() payload, @Req() req : Request) {
     const user = req['user'];
     const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     return this.orderService.create(payload,clientIp,user);
-  }
-
-  
-  @Get(':orderCode')
-  async getOrder(@Param() params ) {
-    return await this.orderService.getOrder(params.orderCode);
   }
 
   @Get('vnpay_return')
   async vnpayRetrun(@Query() query, @Res() res : Response) {
     const order = await this.orderService.handleVnpCallback(query);
     return res.redirect(`${vnpConfig.frontend_Success_Url}/events/${order.event_id}/bookings/${order.show_id}/thankyou-${order.orderCode}`);
+  }
+
+  @Get(':orderCode')
+  async getOrder(@Param() params ) {
+    return await this.orderService.getOrder(params.orderCode);
   }
 
   

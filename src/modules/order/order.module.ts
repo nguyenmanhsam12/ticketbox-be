@@ -7,12 +7,14 @@ import { Orders } from 'src/database/entities/Orders';
 import { CartModule } from '../cart/cart.module';
 import { PaymentMethodModule } from '../payment-method/payment-method.module';
 import { PaymentTransactionModule } from '../payment-transaction/payment-transaction.module';
+import { CartItemModule } from '../cart-item/cart-item.module';
 
 @Module({
   imports : [TypeOrmModule.forFeature([Orders]),
   CartModule,
   PaymentMethodModule,
   PaymentTransactionModule,
+  CartItemModule,
   ],
   controllers: [OrderController],
   providers: [OrderService, OrderRepository],

@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { BaseRepository } from 'src/common/base/base.repository';
 import { PaymentTransactions } from 'src/database/entities/PaymentTransaction';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 
 @Injectable()
 export class PaymentTransactionRepo extends BaseRepository<PaymentTransactions> {
@@ -13,8 +13,11 @@ export class PaymentTransactionRepo extends BaseRepository<PaymentTransactions> 
     super(paymentTransactionRepo);
   }
 
-  async updateStatus(orderCode : string, status : string) : Promise<any> { 
-    return await this.paymentTransactionRepo.update({ order_code : orderCode }, {
+  async updateStatus(  orderCode : string, status : string, manager ?: EntityManager) : Promise<any> { 
+
+    const repo = manager ? manager.getRepository(PaymentTransactions) : this.paymentTransactionRepo;
+
+    return await repo.update({ order_code : orderCode }, {
         status : status as any,
     })
   }

@@ -21,8 +21,12 @@ export class OrderRepository extends BaseRepository<Orders> {
   async updateStatusByOrderCode(
     orderCode: string,
     payment_status_id: number,
+    manager ?: EntityManager,
   ): Promise<any> {
-    return await this.orderRepo.update(
+
+    const repo = manager ? manager.getRepository(Orders) : this.orderRepo;
+
+    return await repo.update(
       {
         orderCode,
       },

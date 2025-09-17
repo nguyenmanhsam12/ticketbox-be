@@ -384,8 +384,15 @@ export class EventRepository extends BaseRepository<Events> {
       throw new HttpException('Event not found', HttpStatus.NOT_FOUND);
     }
 
+    console.log('event',event);
+    
+
     // ---- Lấy bản ghi ticket rẻ nhất (full record) ----
     const allTickets = event.shows.flatMap((s) => s.tickets);
+
+    console.log('allTickets',allTickets);
+      
+    //get object ticket minPrice
     const cheapestTicket = allTickets.length
       ? allTickets.reduce(
           (min, t) => (t.price < min.price ? t : min),
@@ -393,7 +400,7 @@ export class EventRepository extends BaseRepository<Events> {
         )
       : null;
 
-    // ---- Lấy bản ghi show gần nhất (full record) ----
+    // ---- Lấy bản ghi show gần nhất (full record) : tương tự như lấy vé ----
     const now = new Date();
     const futureShows = event.shows.filter((s) => new Date(s.time_start) > now);
     const nearestShow = futureShows.length

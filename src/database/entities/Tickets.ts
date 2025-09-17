@@ -4,7 +4,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
-  OneToOne,
+  
 } from 'typeorm';
 import { Shows } from './Shows';
 import { BaseEntity } from '../../common/base/base.entity';
@@ -40,15 +40,6 @@ export class Tickets extends BaseEntity {
 
   @Column({ length: 250, nullable: true })
   thumbnail: string;
-
-  @Column({ length: 50, nullable: true })
-  slug: string;
-
-  @Column({ type: 'datetime', nullable: true })
-  start_time: Date;
-
-  @Column({ type: 'datetime', nullable: true })
-  end_time: Date;
 
   @Column({ type: 'bool', nullable: true })
   is_free: boolean;

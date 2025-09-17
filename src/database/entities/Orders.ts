@@ -26,7 +26,7 @@ export class Orders extends BaseEntity {
   @Column()
   show_id: number;
 
-  @Column()
+  @Column({ nullable : true })
   payment_method_id : number;
 
   @Column()
@@ -46,6 +46,12 @@ export class Orders extends BaseEntity {
 
   @Column({ type: 'int' })
   total_quantity: number;
+
+  @Column({ type: 'varchar', length: 100, nullable : true })
+  booking_code: string;
+
+  @Column({ type : 'varchar', length : 50, nullable : true })
+  paymentMethod : string;
 
   @Column({
     name: 'status',

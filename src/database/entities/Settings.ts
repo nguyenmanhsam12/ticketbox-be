@@ -1,6 +1,5 @@
 import {
   Entity,
-  PrimaryGeneratedColumn,
   Column,
   ManyToOne,
   JoinColumn,
@@ -23,16 +22,7 @@ export class Settings extends BaseEntity {
   type: SETTING_TYPE;
 
   @Column({ length: 255, nullable: true })
-  message: string;
-
-  @Column({ length: 255, nullable: true })
   link: string;
-
-  @Column({ length: 255, nullable: true })
-  url: string;
-
-  @Column({ length: 255, nullable: true })
-  slug: string;
 
   @ManyToOne(() => Events, (event) => event.settings)
   @JoinColumn({ name: 'event_id' })

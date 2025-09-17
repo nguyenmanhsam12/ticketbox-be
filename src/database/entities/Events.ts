@@ -63,6 +63,9 @@ export class Events extends BaseEntity {
   @Column()
   created_by: number;
 
+  @Column({ type: 'bool', nullable: true })
+  is_free: boolean;
+
   @Column({ length: 255, nullable: true })
   org_name: string;
 

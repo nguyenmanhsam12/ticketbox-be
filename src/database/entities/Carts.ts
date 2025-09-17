@@ -1,6 +1,7 @@
 import { BaseEntity } from '../../common/base/base.entity';
 import {
   Column,
+  DeleteDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
@@ -15,8 +16,6 @@ import { CartStep } from 'src/common/enums/cartStep.enum';
 
 @Entity('carts')
 export class Carts extends BaseEntity {
-  @Column({ type: 'varchar', length: 100, nullable: true })
-  order_code: string | null;
 
   @Column({ type: 'varchar', length: 100 })
   booking_code: string;
@@ -36,6 +35,9 @@ export class Carts extends BaseEntity {
     default: CartStep.BOOK_NOW,
   })
   step: CartStep;
+
+  @DeleteDateColumn({ type: 'timestamp', nullable: true })
+  deleted_at: Date | null;
 
   @ManyToOne(() => Users, (user) => user.carts)
   @JoinColumn({ name: 'user_id' })

@@ -37,9 +37,17 @@ export class CartRepository extends BaseRepository<Carts> {
     return manager.save(cart);
   }
 
-  deleteWithManager(manager: EntityManager, cartId: number) {
-    return manager.delete(Carts, { id: cartId });
-  }
+  async softDeleteByBookingCode(
+      bookingCode: string,
+      manager?: EntityManager,
+    ): Promise<void> {
+      // Lấy repo trong transaction
+      const repo = manager ? manager.getRepository(Carts) : this.cartRepo;
+      await repo.update(
+        { booking_code: bookingCode },
+        { deleted_at: new Date() },
+      );
+    }
 
   // fetch final cart (outside transaction) with relations for returning to client
   findByIdWithRelations(cartId: number) {
