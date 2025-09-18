@@ -44,9 +44,6 @@ export class OrderService {
         );
       }
       
-      console.log('paymentMethodId',paymentMethodId);
-      
-
       if (paymentMethodId) {
         const order = await this.createOrderService(
           user,
@@ -94,8 +91,6 @@ export class OrderService {
         }
       }
 
-      console.log(2133333);
-      
       const order = await this.createOrderService(
         user,
         cart,
@@ -126,7 +121,7 @@ export class OrderService {
       console.error(error.stack);
       await queryRunner.rollbackTransaction();
       if (error instanceof HttpException) {
-        throw error; // giữ nguyên exception, không wrap lại
+        throw error; 
       }
       throw new HttpException(
         'Internal server error: ' + error.message,
