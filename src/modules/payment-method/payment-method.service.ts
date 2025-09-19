@@ -13,7 +13,7 @@ export class PaymentMethodService {
     return this.paymentMethodRepo.findAll();
   }
 
-  createVNPayUrl(orderCode: string, amount: number, clientIp: string): string {
+  createVNPayUrl(expired ,orderCode: string, amount: number, clientIp: string): string {
     if (!orderCode || amount <= 0) {
       throw new Error('Invalid orderCode or amount');
     }

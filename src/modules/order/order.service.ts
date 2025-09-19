@@ -82,6 +82,7 @@ export class OrderService {
           );
 
           const vnPayUrl = this.paymentService.createVNPayUrl(
+            cart.expired_at,
             order.orderCode,
             order.total_amount,
             clientIp,
@@ -267,5 +268,9 @@ export class OrderService {
       .into('order_items')
       .values(orderItems)
       .execute();
+  }
+
+  async getOrderStatus (status : string, timeline : string, user : any) {
+    return this.orderRepo.getOrderStatus(status, timeline, user);
   }
 }

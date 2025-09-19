@@ -35,4 +35,27 @@ export class OrderRepository extends BaseRepository<Orders> {
       },
     );
   }
+
+  async getOrderStatus(status : string, timeline : string, user : any) {
+
+    const now = new Date();
+
+    const query = await this.orderRepo
+      .createQueryBuilder('order')
+      .innerJoinAndSelect('order.show','show')
+      .innerJoinAndSelect('order.event','event')
+      .where('order.user_id = :userId', { userId : user.id });
+
+    if(status !== 'all') {
+      query.andWhere('order.status =:status', { status });
+    }
+
+    if (timeline === 'upcoming') {
+      query.andWhere('show.time_start > :now', { now });
+    } else if (timeline === 'ended') {
+      query.andWhere('show.time_start < :now', { now });
+    }
+
+    return query.orderBy('show.time_start', 'ASC').getRawMany();
+  }
 }

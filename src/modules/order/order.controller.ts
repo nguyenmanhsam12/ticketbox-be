@@ -16,7 +16,7 @@ export class OrderController {
     const clientIp = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     return this.orderService.create(payload,clientIp,user);
   }
-
+  
   @Get('vnpay_return')
   async vnpayRetrun(@Query() query, @Res() res : Response) {
     const order = await this.orderService.handleVnpCallback(query);
@@ -28,5 +28,15 @@ export class OrderController {
     return await this.orderService.getOrder(params.orderCode);
   }
 
+  @UseGuards(AuthGuard)
+  @Get()
+  async getOrderStatus(
+    @Query('status') status : string,
+    @Query('timeline') timeline : string,
+    @Req() req : Request,
+  ) {
+    const user = req['user'];
+    return this.orderService.getOrderStatus(status,timeline,user);
+  }   
   
 }
